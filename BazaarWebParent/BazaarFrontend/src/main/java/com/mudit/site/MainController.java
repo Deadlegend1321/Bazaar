@@ -1,4 +1,4 @@
-package com.mudit.site.BazaarFrontend;
+package com.mudit.site;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
