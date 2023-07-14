@@ -75,7 +75,7 @@
 			<h2>Manage Users | Create New User</h2>
 		</div>
 		<form th:action="@{/users/save}" method="post" style="max-width: 700px; margin: 0 auto;" 
-		th:object="${user}">
+		th:object="${user}" onsubmit="return checkEmailUnique(this);">
 			<div class="border border-secondary rounded p-3">
 				<div class="form-group row m-1">
 					<label class="col-sm-4 col-form-label">E-mail:</label>
@@ -133,6 +133,26 @@
 				</div>
 			</div>
 		</form>
+		
+		<div class="modal fade text-center" id="modalDialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="modalTitle">Warning</h4>
+					<button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+				</div>
+				
+				<div class="modal-body">
+					<span id="modalBody"></span>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+		
 		<div class="text-center">
 			<p>Bazaar Control Panel - Copyright &copy; Bazaar</p>
 		</div>
@@ -143,6 +163,34 @@
 			window.location = "[[@{/users}]]"
 		});
 	});
+	
+	function checkEmailUnique(form){
+		url = "[[@{/users/check_email}]]"
+		userEmail = $("#email").val();
+		csrfValue = $("input[name='_csrf']").val();
+		params = {email: userEmail, _csrf: csrfValue};
+		
+		$.post(url, params, function(response){
+			if(response == "OK"){
+				form.submit();
+			}
+			else if(response == "Duplicated"){
+				showModalDialog("Warning", "Email already exists: " + userEmail);
+			}
+			else{
+				showModalDialog("Error", "Unkown response");
+			}
+		}).fail(function(){
+			showModalDialog("Error", "Unkown response");
+		});
+		return false;
+	}
+	
+	function showModalDialog(title, message){
+		$("#modalTitle").text(title);
+		$("#modalBody").text(message);
+		$("#modalDialog").modal('show');
+	}
 </script>
 </body>
 </html>
