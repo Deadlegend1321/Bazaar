@@ -80,5 +80,14 @@ public class UserService {
 		}
 		
 	}
+	
+	public void delete(Integer id) throws UserNotFoundException {
+		Long countById = userRepository.countById(id);
+		if(countById == null || countById == 0) {
+			throw new UserNotFoundException("Could not find any user with ID: " + id);
+		}
+		
+		userRepository.deleteById(id);
+	}
 
 }
