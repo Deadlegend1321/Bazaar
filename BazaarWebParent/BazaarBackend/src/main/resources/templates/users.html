@@ -6,6 +6,8 @@
 	<title>Home - Bazaar Admin</title>
 	
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 	
@@ -103,14 +105,19 @@
 				<tbody>
 					<tr th:each="user : ${listUsers}">
 						<td>[[${user.id}]]</td>
-						<td></td>
+						<td><span class="fa-solid fa-image-portrait fa-3x"></span></td>
 						<td>[[${user.email}]]</td>
 						<td>[[${user.firstName}]]</td>
 						<td>[[${user.lastName}]]</td>
 						<td>[[${user.roles}]]</td>
-						<td>[[${user.enabled}]]</td>
 						<td>
-							Edit &nbsp; Delete
+							<a th:if="${user.enabled == true}" class="fa-solid fa-check fa-2x"></a>
+							<a th:if="${user.enabled == false}" class="fa-solid fa-xmark fa-2x"></a>
+						</td>
+						<td>
+							<a class="fa-solid fa-pen-to-square" th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
+							 &nbsp;
+							 <a class="fa-sharp fa-solid fa-trash"></a>
 						</td>
 					</tr>
 				</tbody>
