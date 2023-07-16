@@ -33,7 +33,7 @@ public class UserService {
 		return (List<Role>) roleRepository.findAll();
 	}
 
-	public void save(User user) {
+	public User save(User user) {
 		boolean isUpdatingUser = (user.getId() != null);
 		
 		if(isUpdatingUser) {
@@ -49,7 +49,7 @@ public class UserService {
 		else {
 			encodePassword(user);
 		}
-		userRepository.save(user);
+		return userRepository.save(user);
 	}
 	
 	private void encodePassword(User user) {
