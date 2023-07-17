@@ -29,7 +29,7 @@ public class UserRepositoryTests {
 	@Autowired
 	private TestEntityManager entityManager;
 	
-	/*@Test
+	@Test
 	public void testCreateNewUserWithOneRole() {
 		Role roleAdmin = entityManager.find(Role.class, 1);
 		User user = new User("baz@java.com", "1234baz", "baz", "zaar");
@@ -88,7 +88,7 @@ public class UserRepositoryTests {
 	public void testDeleteUser() {
 		Integer userId  = 2;
 		repo.deleteById(userId);
-	}*/
+	}
 	
 	@Test
 	public void testGetUserByEmail() {
@@ -129,6 +129,22 @@ public class UserRepositoryTests {
 		listUsers.forEach(user -> System.out.println(user));
 		
 		assertThat(listUsers.size()).isEqualTo(pageSize);
+	}
+	
+	@Test
+	public void testSearchUsers() {
+		String keyword = "bruce";
+		
+		int pageNumber = 0;
+		int pageSize = 4;
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<User> page = repo.findAll(keyword, pageable);
+		
+		List<User> listUsers =  page.getContent();
+		
+		listUsers.forEach(user -> System.out.println(user));
+		
+		assertThat(listUsers.size()).isGreaterThan(0);
 	}
 
 }
