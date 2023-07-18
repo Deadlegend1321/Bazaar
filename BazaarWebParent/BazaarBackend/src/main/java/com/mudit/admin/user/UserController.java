@@ -20,6 +20,8 @@ import com.mudit.admin.FileUploadUtil;
 import com.mudit.common.entity.Role;
 import com.mudit.common.entity.User;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 
 
 @Controller
@@ -144,5 +146,12 @@ public class UserController {
 		String message = "The user ID " + id + " has been " + status;
 		redirectAttributes.addFlashAttribute("message", message);	
 		return "redirect:/users";
+	}
+	
+	@GetMapping("/users/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException {
+		List<User> listUsers = service.listAll();
+		UserCsvExporter exporter = new UserCsvExporter();
+		exporter.export(listUsers, response);
 	}
 }
