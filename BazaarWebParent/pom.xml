@@ -47,9 +47,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
-			<version>3.0.4.RELEASE</version>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+			<version>3.1.1.RELEASE</version>
 		</dependency>
+
+		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
