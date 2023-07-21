@@ -1,4 +1,4 @@
-package com.mudit.admin.user;
+package com.mudit.admin.user.controller;
 
 import java.io.IOException;
 
@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mudit.admin.FileUploadUtil;
 import com.mudit.admin.security.BazaarUserDetails;
+import com.mudit.admin.user.UserService;
 import com.mudit.common.entity.User;
 
 @Controller
@@ -30,7 +31,7 @@ public class AccountController {
 		User user = service.getByEmail(email);
 		model.addAttribute("user", user);
 		
-		return "account_form";
+		return "users/account_form";
 		
 	}
 	
