@@ -48,6 +48,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/images/**", "/js/**", "/webjars/**").permitAll()
+                        .requestMatchers("/users/**").hasAuthority("Admin")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
