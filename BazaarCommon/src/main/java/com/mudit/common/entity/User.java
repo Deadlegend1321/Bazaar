@@ -1,5 +1,6 @@
 package com.mudit.common.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +22,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-public class User {
+public class User  implements Serializable{
+	
+	public static final long serialVersionUID = 1234L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

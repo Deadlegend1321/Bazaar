@@ -93,7 +93,14 @@ public class Category {
 	public Category(String name, Category parent) {
 		this(name);
 		this.parent = parent;
-	}	
+	}
+	
+	public Category(Integer id, String name, String alias) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.alias = alias;
+	}
 
 	public Integer getId() {
 		return id;
@@ -153,6 +160,7 @@ public class Category {
 	
 	@Transient
 	public String getImagePath() {
+		if (this.id == null) return "/images/image-thumbnail.png";
 		return "/category-images/" + this.id + "/" + this.image;
 	}
 	
