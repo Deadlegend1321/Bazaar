@@ -5,13 +5,6 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
 	<title>[[${title}]]</title>
 	
-	<!--<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"  href="/css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}" />
-	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />		
-	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}" ></script>
-	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-	<script type="text/javascript" th:src="@{/js/common.js}" ></script>-->
-	
 	
 	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}" />
 	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
@@ -36,9 +29,9 @@
 			th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>					
 	</th>
 						
-	<a th:fragment="page_link(pageNum, label)"
+	<a th:fragment="page_link(moduleURL, pageNum, label)"
 		class="page-link" 
-		th:href="@{'/users/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${label}]]</a>
+		th:href="@{${moduleURL} + '/page/' + ${pageNum} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${label}]]</a>
 	
 	<div th:fragment="user_photos" th:remove="tag">
 		<span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
@@ -64,7 +57,7 @@
 		&nbsp; 
 		<a class="fas fa-trash fa-2x icon-dark link-delete" 
 			th:href="@{'/users/delete/' + ${user.id}}"
-			th:userId="${user.id}"
+			th:entityId="${user.id}"
 			title="Delete this user"></a>	
 	</div>
 	
@@ -84,10 +77,47 @@
 		<a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/' + ${cat.id}}"
 			title="Edit this category"></a>
 		&nbsp; 
+		<th:block th:if="${cat.hasChildren == false}">
 		<a class="fas fa-trash fa-2x icon-dark link-delete" 
 			th:href="@{'/categories/delete/' + ${cat.id}}"
-			th:catId="${cat.id}"
-			title="Delete this category"></a>	
+			th:entityId="${cat.id}"
+			title="Delete this category"></a>
+		</th:block>		
 	</div>	
+	
+	<div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
+	<div class="text-center m-1" th:if="${totalItems > 0}">
+		<span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
+	</div>
+	<div class="text-center m-1" th:unless="${totalItems > 0}">
+		<span>No [[${entityName}]] found</span>
+	</div>
+	
+	<div th:if="${totalPages > 1}">
+		<nav>
+		  <ul class="pagination justify-content-center flex-wrap">
+		    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+		    	<a th:replace="fragments :: page_link(${moduleURL}, 1, 'First')"></a>
+		    </li>		  
+		    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+		    	<a th:replace="fragments :: page_link(${moduleURL}, ${currentPage - 1}, 'Previous')"></a>
+		    </li>
+		    
+		    <li th:class="${currentPage != i ? 'page-item': 'page-item active'}" 
+		    	th:each="i : ${#numbers.sequence(1, totalPages)}">
+		    	<a th:replace="fragments :: page_link(${moduleURL}, ${i}, ${i})"></a>
+		    </li>
+		    
+		    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+		    	<a th:replace="fragments :: page_link(${moduleURL}, ${currentPage + 1}, 'Next')"></a>
+		    </li>
+		    
+		    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+		    	<a th:replace="fragments :: page_link(${moduleURL}, ${totalPages}, 'Last')"></a>
+		    </li>		    
+		  </ul>
+		</nav>	
+	</div>		
+	</div>
 </body>
 </html>
