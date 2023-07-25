@@ -49,7 +49,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/images/**", "/js/**", "/webjars/**").permitAll()
                         .requestMatchers("/users/**").hasAuthority("Admin")
-                        .requestMatchers("/categories/**").hasAnyAuthority("Admin", "Editor")
+                        .requestMatchers("/categories/**", "/brands/**").hasAnyAuthority("Admin", "Editor")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
