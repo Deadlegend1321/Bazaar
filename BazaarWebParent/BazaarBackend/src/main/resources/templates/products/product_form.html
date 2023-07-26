@@ -12,9 +12,12 @@
 		<h2>Manage Products | [[${pageTitle}]]</h2>	
 	</div>
 			
-	<form th:action="@{/products/save}" method="post"
+	<form th:action="@{/products/save}" method="post" onsubmit="return checkUnique(this)"
+		enctype="multipart/form-data"
 		th:object="${product}">
 		<input type="hidden" th:field="*{id}" />
+		<input th:if="${product.category != null}" type="hidden" 
+			id="categoryId" th:value="${product.category.id}" />
 	<div>
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 		  <li class="nav-item">
@@ -41,8 +44,16 @@
 		  <div class="tab-pane" id="description" role="tabpanel">
 		  	<div th:replace="products/product_description :: content"></div>
 		  </div>
-		  <div class="tab-pane" id="images" role="tabpanel">Images</div>
-		  <div class="tab-pane" id="details" role="tabpanel">Details</div>
+		  <div class="tab-pane" id="images" role="tabpanel">
+		  	<div th:replace="products/product_images :: content"></div>
+		  </div>
+		  <div class="tab-pane p-3" id="details" role="tabpanel">
+		  	<div th:replace="products/product_details :: content"></div>
+		  	<div>
+		  		<input type="button" class="btn btn-secondary" value="Add More Detail"
+		  			onclick="addNextDetailSection()" />
+		  	</div>	
+		  </div>
 		  <div class="tab-pane p-3" id="shipping" role="tabpanel">
 		  	<div th:replace="products/product_shipping :: content"></div>
 		  </div>
@@ -60,37 +71,17 @@
 	
 </div>
 <script type="text/javascript">
+	MAX_FILE_SIZE = 502400; // 500KB
+	
 	moduleURL = "[[@{/products}]]";
 	brandModuleURL = "[[@{/brands}]]";
+	defaultImageThumbnailSrc = "[[@{/images/image-thumbnail.png}]]";
+	checkUniqueUrl = "[[@{/products/check_unique}]]";
 	
-	dropdownBrands = $("#brand");
-	dropdownCategories = $("#category");
-	
-	$(document).ready(function() {
-		
-		$("#shortDescription").richText();
-		$("#fullDescription").richText();
-		
-		dropdownBrands.change(function() {
-			dropdownCategories.empty();
-			getCategories();
-		});	
-		
-		getCategories();
-	});
-	
-	
-	function getCategories() {
-		brandId = dropdownBrands.val(); 
-		url = brandModuleURL + "/" + brandId + "/categories";
-		
-		$.get(url, function(responseJson) {
-			$.each(responseJson, function(index, category) {
-				$("<option>").val(category.id).text(category.name).appendTo(dropdownCategories);
-			});			
-		});
-	}
 </script>
 <script th:src="@{/js/common_form.js}"></script>
+<script th:src="@{/js/product_form_overview.js}"></script>
+<script th:src="@{/js/product_form_images.js}"></script>
+<script th:src="@{/js/product_form_details.js}"></script>
 </body>
 </html>
