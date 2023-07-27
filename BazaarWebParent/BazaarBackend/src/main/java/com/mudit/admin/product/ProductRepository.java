@@ -1,5 +1,7 @@
 package com.mudit.admin.product;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,5 +19,12 @@ public interface ProductRepository extends CrudRepository<Product, Integer>, Pag
 	public void updateEnabledStatus(Integer id, boolean enabled);
 
 	public Long countById(Integer id);
+	
+	@Query("SELECT p FROM Product p WHERE p.name LIKE %?1% " 
+			+ "OR p.shortDescription LIKE %?1% "
+			+ "OR p.fullDescription LIKE %?1% "
+			+ "OR p.brand.name LIKE %?1% "
+			+ "OR p.category.name LIKE %?1%")
+	public Page<Product> findAll(String keyword, Pageable pageable);
 	
 }
