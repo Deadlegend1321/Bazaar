@@ -18,6 +18,7 @@ import com.mudit.common.entity.Brand;
 import com.mudit.common.entity.Category;
 import com.mudit.common.entity.Product;
 import com.mudit.common.entity.ProductImage;
+import com.mudit.common.exception.ProductNotFoundException;
 import com.mudit.admin.security.BazaarUserDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mudit.admin.FileUploadUtil;
 import com.mudit.common.entity.Category;
+import com.mudit.common.exception.CategoryNotFoundException;
 
 import jakarta.servlet.http.HttpServletResponse;
 

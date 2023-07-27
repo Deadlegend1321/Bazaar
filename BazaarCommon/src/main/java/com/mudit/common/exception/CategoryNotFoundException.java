@@ -1,4 +1,4 @@
-package com.mudit.admin.category;
+package com.mudit.common.exception;
 
 public class CategoryNotFoundException extends Exception {
 

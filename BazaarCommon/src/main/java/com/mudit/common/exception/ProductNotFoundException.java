@@ -1,4 +1,4 @@
-package com.mudit.admin.product;
+package com.mudit.common.exception;
 
 public class ProductNotFoundException extends Exception {
 

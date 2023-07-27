@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mudit.common.entity.Category;
+import com.mudit.common.exception.CategoryNotFoundException;
 
 import jakarta.transaction.Transactional;
 
