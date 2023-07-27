@@ -3,7 +3,7 @@ package com.mudit.common.entity;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
+import java.util.Iterator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -79,5 +79,18 @@ public class User  implements Serializable{
 	@Transient
 	public String getFullName() {
 		return firstName + " " + lastName;
+	}
+	
+	public boolean hasRole(String roleName) {
+		Iterator<Role> iterator = roles.iterator();
+
+		while (iterator.hasNext()) {
+			Role role = iterator.next();
+			if (role.getName().equals(roleName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
