@@ -1,4 +1,4 @@
-package com.mudit.admin;
+	package com.mudit.admin;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,7 +15,8 @@ public class MvcConfig implements WebMvcConfigurer {
 		exposeDirectory("user-photos", registry);
 		exposeDirectory("../category-images", registry);
 		exposeDirectory("../brand-logos", registry);
-		exposeDirectory("../product-images", registry);			
+		exposeDirectory("../product-images", registry);
+		exposeDirectory("../site-logo", registry);
 	}
 	
 	private void exposeDirectory(String pathPattern, ResourceHandlerRegistry registry) {

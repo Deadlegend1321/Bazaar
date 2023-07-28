@@ -1,4 +1,4 @@
-package com.mudit.admin.user.category;
+package com.mudit.admin.category;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

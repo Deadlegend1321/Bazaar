@@ -1,4 +1,4 @@
-package com.mudit.admin.user.category;
+package com.mudit.admin.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
