@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
-public class User  implements Serializable{
+public class User implements Serializable{
 	
 	public static final long serialVersionUID = 1234L;
 	

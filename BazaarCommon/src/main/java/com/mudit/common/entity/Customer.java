@@ -1,8 +1,10 @@
 package com.mudit.common.entity;
 
 
+import java.io.Serializable;
 import java.util.Date;
-
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +16,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer implements Serializable{
+	public static final long serialVersionUID = 1234L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +64,13 @@ public class Customer {
 	@ManyToOne
 	@JoinColumn(name = "country_id")
 	private Country country;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "authentication_type", length = 10)
+	private AuthenticationType authenticationType;
+	
+	@Column(name = "reset_password_token", length = 30)
+	private String resetPasswordToken;
 
 	public Customer() {
 	}
@@ -194,5 +204,20 @@ public class Customer {
 		return firstName + " " + lastName;
 	}
 	
+	public AuthenticationType getAuthenticationType() {
+		return authenticationType;
+	}
+
+	public void setAuthenticationType(AuthenticationType authenticationType) {
+		this.authenticationType = authenticationType;
+	}
+	
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
+	}
 		
 }

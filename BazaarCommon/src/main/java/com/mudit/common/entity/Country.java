@@ -1,5 +1,6 @@
 package com.mudit.common.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -13,7 +14,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "countries")
-public class Country {
+public class Country implements Serializable{
+	
+	public static final long serialVersionUID = 1234L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
