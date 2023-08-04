@@ -2,7 +2,6 @@ package com.mudit.customer;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import org.springframework.data.repository.query.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -83,7 +82,7 @@ public class CustomerController {
 	}	
 	
 	@GetMapping("/verify")
-	public String verifyAccount(@Param("code") String code, Model model) {
+	public String verifyAccount(String code, Model model) {
 		boolean verified = customerService.verify(code);
 		
 		return "register/" + (verified ? "verify_success" : "verify_fail");
@@ -91,7 +90,7 @@ public class CustomerController {
 	
 	@GetMapping("/account_details")
 	public String viewAccountDetails(Model model, HttpServletRequest request) {
-		String email = getEmailOfAuthenticatedCustomer(request);
+		String email = Utility.getEmailOfAuthenticatedCustomer(request);
 		Customer customer = customerService.getCustomerByEmail(email);
 		List<Country> listCountries = customerService.listAllCountries();
 		
@@ -101,21 +100,7 @@ public class CustomerController {
 		return "customer/account_form";
 	}
 	
-	private String getEmailOfAuthenticatedCustomer(HttpServletRequest request) {
-		Object principal = request.getUserPrincipal();
-		String customerEmail = null;
-		
-		if (principal instanceof UsernamePasswordAuthenticationToken 
-				|| principal instanceof RememberMeAuthenticationToken) {
-			customerEmail = request.getUserPrincipal().getName();
-		} else if (principal instanceof OAuth2AuthenticationToken) {
-			OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) principal;
-			CustomerOAuth2User oauth2User = (CustomerOAuth2User) oauth2Token.getPrincipal();
-			customerEmail = oauth2User.getEmail();
-		}
-		
-		return customerEmail;
-	}
+
 	
 	@PostMapping("/update_account_details")
 	public String updateAccountDetails(Model model, Customer customer, RedirectAttributes ra,
