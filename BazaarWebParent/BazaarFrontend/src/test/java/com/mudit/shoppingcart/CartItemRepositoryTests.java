@@ -14,7 +14,7 @@ import org.springframework.test.annotation.Rollback;
 
 import com.mudit.common.entity.CartItem;
 import com.mudit.common.entity.Customer;
-import com.mudit.common.entity.Product;
+import com.mudit.common.entity.product.Product;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)

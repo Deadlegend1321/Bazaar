@@ -1,4 +1,4 @@
-package com.mudit.common.entity;
+package com.mudit.common.entity.setting;
 
 import java.util.List;
 

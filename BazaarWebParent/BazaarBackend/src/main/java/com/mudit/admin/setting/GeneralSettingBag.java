@@ -2,8 +2,8 @@ package com.mudit.admin.setting;
 
 import java.util.List;
 
-import com.mudit.common.entity.Setting;
-import com.mudit.common.entity.SettingBag;
+import com.mudit.common.entity.setting.Setting;
+import com.mudit.common.entity.setting.SettingBag;
 
 public class GeneralSettingBag extends SettingBag {
 

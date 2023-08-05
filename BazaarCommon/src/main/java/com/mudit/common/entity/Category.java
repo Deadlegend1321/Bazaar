@@ -5,9 +5,6 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -17,10 +14,7 @@ import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "categories")
-public class Category {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class Category extends IdBasedEntity {
 	
 	@Column(length = 128, nullable = false, unique = true)
 	private String name;
@@ -50,7 +44,7 @@ public class Category {
 	public Category(Integer id) {
 		this.id = id;
 	}
-	
+
 	public static Category copyIdAndName(Category category) {
 		Category copyCategory = new Category();
 		copyCategory.setId(category.getId());
@@ -85,7 +79,7 @@ public class Category {
 		
 		return copyCategory;
 	}
-
+	
 	public Category(String name) {
 		this.name = name;
 		this.alias = name;
@@ -95,21 +89,13 @@ public class Category {
 	public Category(String name, Category parent) {
 		this(name);
 		this.parent = parent;
-	}
-	
+	}	
+
 	public Category(Integer id, String name, String alias) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.alias = alias;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -163,6 +149,7 @@ public class Category {
 	@Transient
 	public String getImagePath() {
 		if (this.id == null) return "/images/image-thumbnail.png";
+		
 		return "/category-images/" + this.id + "/" + this.image;
 	}
 	
@@ -176,12 +163,12 @@ public class Category {
 
 	@Transient
 	private boolean hasChildren;
-	
+
 	@Override
 	public String toString() {
 		return this.name;
 	}
-	
+
 	public String getAllParentIDs() {
 		return allParentIDs;
 	}

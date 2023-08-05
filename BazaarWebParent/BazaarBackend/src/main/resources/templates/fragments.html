@@ -104,9 +104,9 @@
 		<form th:action="@{${moduleURL} + '/page/1'}" class="form-inline m-3">
 			<input type="hidden" name="sortField" th:value="${sortField}" />
 			<input type="hidden" name="sortDir" th:value="${sortDir}" />
-			
+	
 			Filter:&nbsp;
-			<input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
+			<input type="search" name="keyword" th:value="${keyword}" class="form-control" required />
 			&nbsp;&nbsp;
 			<button type="submit" class="btn btn-primary">
 				<i class="fas fa-search"></i>
@@ -116,10 +116,25 @@
 				<i class="fas fa-eraser"></i>
 			</button>
 		</form>
-		
+	
 		<div th:if="${message != null}" class="alert alert-success text-center">
 			[[${message}]]
 		</div>
+	</div>
+	
+	<div th:fragment="format_currency(amount)" th:remove="tag">
+		<span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}"
+			th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>[[${#numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE,
+		DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]<span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}"
+			th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+	</div>
+	
+	<div th:fragment="format_time(dateTime)" th:remove="tag">
+		<span th:text="${#dates.format(dateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+	</div>
+	
+	<div th:fragment="currency_input(amount)" th:remove="tag">
+		<input type="text" readonly class="form-control" th:value="${(CURRENCY_SYMBOL_POSITION == 'Before price' ? CURRENCY_SYMBOL : '') + #numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE) + (CURRENCY_SYMBOL_POSITION == 'After price' ? CURRENCY_SYMBOL : '')}">
 	</div>
 </body>
 </html>

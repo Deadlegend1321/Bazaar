@@ -1,4 +1,4 @@
-package com.mudit.common.entity;
+package com.mudit.common.entity.setting;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

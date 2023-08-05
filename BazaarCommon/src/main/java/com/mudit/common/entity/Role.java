@@ -4,24 +4,11 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "roles")
-@Data
-@NoArgsConstructor
-public class Role implements Serializable{
-	
-	public static final long serialVersionUID = 1234L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class Role extends IdBasedEntity {
 	
 	@Column(length = 40, nullable = false, unique = true)
 	private String name;
@@ -29,38 +16,36 @@ public class Role implements Serializable{
 	@Column(length = 150, nullable = false)
 	private String description;
 
+	public Role() {
+	}
+	
+	public Role(Integer id) {
+		this.id = id;
+	}
+
+	public Role(String name) {
+		this.name = name;
+	}	
+	
 	public Role(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
 
-	public Role(String name) {
-		
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public Role(Integer id) {
-		this.id = id;
+	public String getDescription() {
+		return description;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Role other = (Role) obj;
-		if(id == null) {
-			if(other.id != null) {
-				return false;
-			}
-		}
-		else if(!id.equals(other.id)) {
-			return false;
-		}
-		return true;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
@@ -72,11 +57,26 @@ public class Role implements Serializable{
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Role other = (Role) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return this.name;
 	}
-	
-	
-	
+
 	
 }

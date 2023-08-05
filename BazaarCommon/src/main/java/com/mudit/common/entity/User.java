@@ -7,28 +7,15 @@ import java.util.Iterator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
-@Data
-@NoArgsConstructor
-public class User implements Serializable{
-	
-	public static final long serialVersionUID = 1234L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class User extends IdBasedEntity {
 	
 	@Column(length = 128, nullable = false, unique = true)
 	private String email;
@@ -47,17 +34,6 @@ public class User implements Serializable{
 	
 	private boolean enabled;
 	
-	
-	public User(String email, String password, String firstName, String lastName) {
-		super();
-		this.email = email;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-
-
-
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name = "users_roles",
@@ -66,13 +42,86 @@ public class User implements Serializable{
 			)
 	private Set<Role> roles = new HashSet<>();
 	
+	public User() {
+	}
+	
+	public User(String email, String password, String firstName, String lastName) {
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(String photos) {
+		this.photos = photos;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
 	public void addRole(Role role) {
 		this.roles.add(role);
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", roles=" + roles + "]";
 	}
 	
 	@Transient
 	public String getPhotosImagePath() {
-		if(id == null || photos == null) return "/images/default-user.png";
+		if (id == null || photos == null) return "/images/default-user.png";
+		
 		return "/user-photos/" + this.id + "/" + this.photos;
 	}
 	
@@ -83,14 +132,14 @@ public class User implements Serializable{
 	
 	public boolean hasRole(String roleName) {
 		Iterator<Role> iterator = roles.iterator();
-
+		
 		while (iterator.hasNext()) {
 			Role role = iterator.next();
 			if (role.getName().equals(roleName)) {
 				return true;
 			}
 		}
-
+		
 		return false;
 	}
 }

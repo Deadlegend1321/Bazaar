@@ -1,9 +1,8 @@
 package com.mudit.common.entity;
 
+import com.mudit.common.entity.product.Product;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -11,10 +10,7 @@ import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "cart_items")
-public class CartItem {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+public class CartItem extends IdBasedEntity {
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
@@ -27,14 +23,6 @@ public class CartItem {
 	private int quantity;
 	
 	public CartItem() {
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Customer getCustomer() {
@@ -66,11 +54,9 @@ public class CartItem {
 		return "CartItem [id=" + id + ", customer=" + customer.getFullName() + ", product=" + product.getShortName() + ", quantity=" + quantity
 				+ "]";
 	}
-	
+
 	@Transient
 	public float getSubtotal() {
 		return product.getDiscountPrice() * quantity;
 	}
-
-	
 }

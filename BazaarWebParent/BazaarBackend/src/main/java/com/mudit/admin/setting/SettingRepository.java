@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.mudit.common.entity.Setting;
-import com.mudit.common.entity.SettingCategory;
+import com.mudit.common.entity.setting.Setting;
+import com.mudit.common.entity.setting.SettingCategory;
 
 public interface SettingRepository extends CrudRepository<Setting, String>, PagingAndSortingRepository<Setting, String> {
 

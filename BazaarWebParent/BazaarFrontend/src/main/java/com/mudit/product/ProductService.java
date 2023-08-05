@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.mudit.common.entity.Product;
+import com.mudit.common.entity.product.Product;
 import com.mudit.common.exception.ProductNotFoundException;
 
 @Service

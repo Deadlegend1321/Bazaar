@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mudit.admin.FileUploadUtil;
 import com.mudit.common.entity.Currency;
-import com.mudit.common.entity.Setting;
+import com.mudit.common.entity.setting.Setting;
 
 import jakarta.servlet.http.HttpServletRequest;
 

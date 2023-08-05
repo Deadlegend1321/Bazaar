@@ -23,7 +23,7 @@ import com.mudit.admin.paging.PagingAndSortingParam;
 import com.mudit.admin.security.BazaarUserDetails;
 import com.mudit.common.entity.Brand;
 import com.mudit.common.entity.Category;
-import com.mudit.common.entity.Product;
+import com.mudit.common.entity.product.Product;
 import com.mudit.common.exception.ProductNotFoundException;
 
 @Controller

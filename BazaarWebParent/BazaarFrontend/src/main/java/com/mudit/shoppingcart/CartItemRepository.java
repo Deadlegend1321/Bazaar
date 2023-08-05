@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.mudit.common.entity.CartItem;
 import com.mudit.common.entity.Customer;
-import com.mudit.common.entity.Product;
+import com.mudit.common.entity.product.Product;
 
 public interface CartItemRepository extends CrudRepository<CartItem, Integer> {
 	public List<CartItem> findByCustomer(Customer customer);

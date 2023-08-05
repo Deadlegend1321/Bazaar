@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mudit.category.CategoryService;
 import com.mudit.common.entity.Category;
-import com.mudit.common.entity.Product;
+import com.mudit.common.entity.product.Product;
 import com.mudit.common.exception.CategoryNotFoundException;
 import com.mudit.common.exception.ProductNotFoundException;
 
