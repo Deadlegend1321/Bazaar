@@ -2,6 +2,11 @@ package com.mudit.customer;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,16 +18,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.mudit.Utility;
 import com.mudit.common.entity.Country;
 import com.mudit.common.entity.Customer;
-import com.mudit.setting.EmailSettingBag;
-import com.mudit.setting.SettingService;
 import com.mudit.security.CustomerUserDetails;
 import com.mudit.security.oauth.CustomerOAuth2User;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.servlet.http.HttpServletRequest;
+import com.mudit.setting.EmailSettingBag;
+import com.mudit.setting.SettingService;
 
 @Controller
 public class CustomerController {
@@ -100,8 +103,6 @@ public class CustomerController {
 		return "customer/account_form";
 	}
 	
-
-	
 	@PostMapping("/update_account_details")
 	public String updateAccountDetails(Model model, Customer customer, RedirectAttributes ra,
 			HttpServletRequest request) {
@@ -110,7 +111,14 @@ public class CustomerController {
 		
 		updateNameForAuthenticatedCustomer(customer, request);
 		
-		return "redirect:/account_details";
+		String redirectOption = request.getParameter("redirect");
+		String redirectURL = "redirect:/account_details";
+		
+		if ("address_book".equals(redirectOption)) {
+			redirectURL = "redirect:/address_book";
+		}
+		
+		return redirectURL;
 	}
 
 	private void updateNameForAuthenticatedCustomer(Customer customer, HttpServletRequest request) {
