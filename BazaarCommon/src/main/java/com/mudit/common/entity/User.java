@@ -15,7 +15,9 @@ import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "users")
-public class User extends IdBasedEntity {
+public class User extends IdBasedEntity implements Serializable{
+	
+	public static final long serialVersionUID = 1234L;
 	
 	@Column(length = 128, nullable = false, unique = true)
 	private String email;

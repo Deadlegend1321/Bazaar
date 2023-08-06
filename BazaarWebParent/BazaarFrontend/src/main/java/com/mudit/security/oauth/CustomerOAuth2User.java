@@ -1,12 +1,17 @@
 package com.mudit.security.oauth;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-public class CustomerOAuth2User implements OAuth2User {
+public class CustomerOAuth2User implements OAuth2User, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String clientName;
 	private String fullName;
 	private OAuth2User oauth2User;

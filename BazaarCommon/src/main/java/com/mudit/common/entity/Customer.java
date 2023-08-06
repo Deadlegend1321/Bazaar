@@ -11,7 +11,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "customers")
-public class Customer extends AbstractAddressWithCountry {
+public class Customer extends AbstractAddressWithCountry implements Serializable {
+	
+	public static final long serialVersionUID = 1234L;
 	
 	@Column(nullable = false, unique = true, length = 45)
 	private String email;

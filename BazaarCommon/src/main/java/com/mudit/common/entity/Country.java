@@ -11,7 +11,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "countries")
-public class Country extends IdBasedEntity {
+public class Country extends IdBasedEntity implements Serializable {
+	
+	public static final long serialVersionUID = 1234L;
 	
 	@Column(nullable = false, length = 45)
 	private String name;

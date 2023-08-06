@@ -48,7 +48,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/images/**", "/js/**", "/webjars/**").permitAll()
-                        .requestMatchers("/account_details", "/update_account_details", "/cart", "/address_book/**").authenticated()
+                        .requestMatchers("/account_details", "/update_account_details", "/cart", "/address_book/**", "/checkout", "/place_order").authenticated()
                         .anyRequest().permitAll()
                 )
                 .sessionManagement((session) -> session
