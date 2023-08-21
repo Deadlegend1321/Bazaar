@@ -1,5 +1,6 @@
 package com.mudit.common.entity.product;
 
+import com.mudit.common.Constants;
 import com.mudit.common.entity.IdBasedEntity;
 
 import jakarta.persistence.Column;
@@ -53,7 +54,7 @@ public class ProductImage extends IdBasedEntity {
 	
 	@Transient
 	public String getImagePath() {
-		return "/product-images/" + product.getId() + "/extras/" + this.name;
+		return Constants.S3_BASE_URI + "/product-images/" + product.getId() + "/extras/" + this.name;
 	}
 	
 }

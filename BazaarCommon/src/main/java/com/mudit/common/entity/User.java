@@ -13,6 +13,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
+import com.mudit.common.Constants;
+
 @Entity
 @Table(name = "users")
 public class User extends IdBasedEntity implements Serializable{
@@ -124,7 +126,7 @@ public class User extends IdBasedEntity implements Serializable{
 	public String getPhotosImagePath() {
 		if (id == null || photos == null) return "/images/default-user.png";
 		
-		return "/user-photos/" + this.id + "/" + this.photos;
+		return Constants.S3_BASE_URI + "/user-photos/" + this.id + "/" + this.photos;
 	}
 	
 	@Transient

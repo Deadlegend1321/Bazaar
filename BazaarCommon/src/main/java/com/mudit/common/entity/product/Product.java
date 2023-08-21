@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.mudit.common.Constants;
 import com.mudit.common.entity.Brand;
 import com.mudit.common.entity.Category;
 import com.mudit.common.entity.IdBasedEntity;
@@ -251,7 +252,7 @@ public class Product extends IdBasedEntity {
 	public String getMainImagePath() {
 		if (id == null || mainImage == null) return "/images/image-thumbnail.png";
 		
-		return "/product-images/" + this.id + "/" + this.mainImage;
+		return Constants.S3_BASE_URI + "/product-images/" + this.id + "/" + this.mainImage;
 	}
 
 	public List<ProductDetail> getDetails() {

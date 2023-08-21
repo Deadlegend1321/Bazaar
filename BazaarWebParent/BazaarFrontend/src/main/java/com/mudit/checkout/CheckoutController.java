@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mudit.Utility;
 import com.mudit.address.AddressService;
+import com.mudit.checkout.paypal.PayPalApiException;
+import com.mudit.checkout.paypal.PayPalService;
 import com.mudit.common.entity.Address;
 import com.mudit.common.entity.CartItem;
 import com.mudit.common.entity.Customer;
@@ -30,6 +32,7 @@ import com.mudit.order.OrderService;
 import com.mudit.setting.CurrencySettingBag;
 import com.mudit.setting.EmailSettingBag;
 import com.mudit.setting.SettingService;
+import com.mudit.setting.PaymentSettingBag;
 import com.mudit.shipping.ShippingRateService;
 import com.mudit.shoppingcart.ShoppingCartService;
 
@@ -43,6 +46,7 @@ public class CheckoutController {
 	@Autowired private ShoppingCartService cartService;
 	@Autowired private OrderService orderService;
 	@Autowired private SettingService settingService;
+	@Autowired private PayPalService paypalService;
 	
 	@GetMapping("/checkout")
 	public String showCheckoutPage(Model model, HttpServletRequest request) {
@@ -66,6 +70,13 @@ public class CheckoutController {
 		List<CartItem> cartItems = cartService.listCartItems(customer);
 		CheckoutInfo checkoutInfo = checkoutService.prepareCheckout(cartItems, shippingRate);
 		
+		String currencyCode = settingService.getCurrencyCode();
+		PaymentSettingBag paymentSettings = settingService.getPaymentSettings();
+		String paypalClientId = paymentSettings.getClientID();
+		
+		model.addAttribute("paypalClientId", paypalClientId);
+		model.addAttribute("currencyCode", currencyCode);
+		model.addAttribute("customer", customer);
 		model.addAttribute("checkoutInfo", checkoutInfo);
 		model.addAttribute("cartItems", cartItems);
 		
@@ -138,5 +149,31 @@ public class CheckoutController {
 		
 		helper.setText(content, true);
 		mailSender.send(message);		
+	}
+	
+	@PostMapping("/process_paypal_order")
+	public String processPayPalOrder(HttpServletRequest request, Model model) 
+			throws UnsupportedEncodingException, MessagingException {
+		String orderId = request.getParameter("orderId");
+
+		String pageTitle = "Checkout Failure";
+		String message = null;
+
+		try {
+			if (paypalService.validateOrder(orderId)) {
+				return placeOrder(request);
+			} else {
+				pageTitle = "Checkout Failure";
+				message = "ERROR: Transaction could not be completed because order information is invalid";
+			}
+		} catch (PayPalApiException e) {
+			message = "ERROR: Transaction failed due to error: " + e.getMessage();
+		}
+
+		model.addAttribute("pageTitle", pageTitle);
+		model.addAttribute("title", pageTitle);
+		model.addAttribute("message", message);
+
+		return "message";
 	}
 }

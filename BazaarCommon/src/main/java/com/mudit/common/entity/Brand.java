@@ -11,6 +11,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
+import com.mudit.common.Constants;
+
 
 @Entity
 @Table(name = "brands")
@@ -77,6 +79,6 @@ public class Brand extends IdBasedEntity {
 	public String getLogoPath() {
 		if (this.id == null) return "/images/image-thumbnail.png";
 		
-		return "/brand-logos/" + this.id + "/" + this.logo;		
+		return Constants.S3_BASE_URI + "/brand-logos/" + this.id + "/" + this.logo;		
 	}
 }

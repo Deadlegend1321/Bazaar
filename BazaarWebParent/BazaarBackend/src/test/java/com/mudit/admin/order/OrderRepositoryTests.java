@@ -3,6 +3,7 @@ package com.mudit.admin.order;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import com.mudit.common.entity.Customer;
 import com.mudit.common.entity.order.Order;
 import com.mudit.common.entity.order.OrderDetail;
 import com.mudit.common.entity.order.OrderStatus;
+import com.mudit.common.entity.order.OrderTrack;
 import com.mudit.common.entity.order.PaymentMethod;
 import com.mudit.common.entity.product.Product;
 
@@ -153,5 +155,50 @@ public class OrderRepositoryTests {
 		
 		Optional<Order> result = repo.findById(orderId);
 		assertThat(result).isNotPresent();
+	}
+	
+	@Test
+	public void testUpdateOrderTracks() {
+		Integer orderId = 5;
+		Order order = repo.findById(orderId).get();
+
+		OrderTrack newTrack = new OrderTrack();
+		newTrack.setOrder(order);
+		newTrack.setUpdatedTime(new Date());
+		newTrack.setStatus(OrderStatus.NEW);
+		newTrack.setNotes(OrderStatus.NEW.defaultDescription());
+
+		OrderTrack processingTrack = new OrderTrack();
+		processingTrack.setOrder(order);
+		processingTrack.setUpdatedTime(new Date());
+		processingTrack.setStatus(OrderStatus.PROCESSING);
+		processingTrack.setNotes(OrderStatus.PROCESSING.defaultDescription());
+
+		List<OrderTrack> orderTracks = order.getOrderTracks();
+		orderTracks.add(newTrack);
+		orderTracks.add(processingTrack);
+
+		Order updatedOrder = repo.save(order);
+
+		assertThat(updatedOrder.getOrderTracks()).hasSizeGreaterThan(1);
+	}
+	
+	@Test
+	public void testAddTrackWithStatusNewToOrder() {
+		Integer orderId = 2;
+		Order order = repo.findById(orderId).get();
+
+		OrderTrack newTrack = new OrderTrack();
+		newTrack.setOrder(order);
+		newTrack.setUpdatedTime(new Date());
+		newTrack.setStatus(OrderStatus.NEW);
+		newTrack.setNotes(OrderStatus.NEW.defaultDescription());
+
+		List<OrderTrack> orderTracks = order.getOrderTracks();
+		orderTracks.add(newTrack);		
+
+		Order updatedOrder = repo.save(order);
+
+		assertThat(updatedOrder.getOrderTracks()).hasSizeGreaterThan(1);
 	}
 }

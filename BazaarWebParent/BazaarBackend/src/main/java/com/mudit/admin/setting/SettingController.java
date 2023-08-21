@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mudit.admin.FileUploadUtil;
+import com.mudit.common.Constants;
 import com.mudit.common.entity.Currency;
 import com.mudit.common.entity.setting.Setting;
 
@@ -37,6 +38,8 @@ public class SettingController {
 		for (Setting setting : listSettings) {
 			model.addAttribute(setting.getKey(), setting.getValue());
 		}
+		
+		model.addAttribute("S3_BASE_URI", Constants.S3_BASE_URI);
 		
 		return "settings/settings";
 	}

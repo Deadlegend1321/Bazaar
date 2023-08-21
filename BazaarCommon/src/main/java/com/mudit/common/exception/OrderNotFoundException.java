@@ -1,4 +1,4 @@
-package com.mudit.admin.order;
+package com.mudit.common.exception;
 
 public class OrderNotFoundException extends Exception {
 
