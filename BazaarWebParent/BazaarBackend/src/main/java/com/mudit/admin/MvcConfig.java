@@ -1,10 +1,7 @@
-	package com.mudit.admin;
+package com.mudit.admin;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import com.mudit.admin.paging.PagingAndSortingArgumentResolver;
@@ -12,7 +9,7 @@ import com.mudit.admin.paging.PagingAndSortingArgumentResolver;
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
-	@Override
+	/*@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		exposeDirectory("user-photos", registry);
 		exposeDirectory("../category-images", registry);
@@ -29,7 +26,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
 		registry.addResourceHandler(logicalPath)
 			.addResourceLocations("file:/" + absolutePath + "/");
-		}
+		}*/
 	
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

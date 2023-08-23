@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mudit.admin.FileUploadUtil;
+import com.mudit.admin.AmazonS3Util;
 import com.mudit.common.Constants;
 import com.mudit.common.entity.Currency;
 import com.mudit.common.entity.setting.Setting;
@@ -65,9 +65,9 @@ public class SettingController {
 			String value = "/site-logo/" + fileName;
 			settingBag.updateSiteLogo(value);
 			
-			String uploadDir = "../site-logo/";
-			FileUploadUtil.cleanDir(uploadDir);
-			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+			String uploadDir = "site-logo";
+			AmazonS3Util.removeFolder(uploadDir);
+			AmazonS3Util.uploadFile(uploadDir, fileName, multipartFile.getInputStream());
 		}
 	}
 	

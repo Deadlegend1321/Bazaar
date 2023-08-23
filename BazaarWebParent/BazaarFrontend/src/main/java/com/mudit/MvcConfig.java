@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+//@Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
-	@Override
+	/*@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		exposeDirectory("../category-images", registry);
 		exposeDirectory("../brand-logos", registry);
@@ -26,6 +26,6 @@ public class MvcConfig implements WebMvcConfigurer {
 				
 		registry.addResourceHandler(logicalPath)
 			.addResourceLocations("file:/" + absolutePath + "/");		
-	}
+	}*/
 
 }
