@@ -14,6 +14,8 @@ For logging in the Backend Control Panel, E-mail: kanna.allada@gmail.com, Passwo
 
 Try creating your own user in backend with different roles and login again with your user to see different functionalities provided to you, For e.g. - Try to be a Shipper only.
 
+In Ecommerce Application use USA as your address if going for a Paypal Checkout.
+
 - **Live Demo Backend Control Panel:** [Link to the live demo](https://bazaar-admin-4104de4d8d2d.herokuapp.com/)
 - **Live Demo Ecommerce Application:** [Link to the live demo](https://bazaar-a7ef40befd94.herokuapp.com/)
 
