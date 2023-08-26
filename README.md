@@ -31,7 +31,7 @@ In Ecommerce Application use USA as your address if going for a Paypal Checkout.
 ## Tech Stack
 
 - Backend: Java Spring Boot
-- Frontend: HTML, CSS, JavaScript, Jquery
+- Frontend: HTML, CSS, JavaScript, Jquery, Bootstrap
 - Database: MySQL, ClearDB
 - Deployment: Heroku
 - Version Control: Git
